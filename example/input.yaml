@@ -1,0 +1,27 @@
+#必填设置
+Sample_Name: n-Bi2Te3 #样品名称，无实际意义，仅为区分
+Longitudinal_Sound_Velocity: 2822.368 #纵波声速 unit: m/s
+Transverse_Sound_Velocity: 1560 #横波声速 unit: m/s
+Sample_Density: 7.5   #样品的密度 unit: g/cm^3
+Number_Atoms: 15  #单胞中原子数目 
+Volume_Cell: 484.86  #单胞体积 unit: A^3
+Temperature:
+    Start_Temperature: 1  #起始温度 单位: K
+    End_Temperature: 700    #终止温度 单位: K
+    Interval_Temperature: 1 # 温度间隔 单位: K
+Relative_Atomic_Mass: 761.8488 #化学式中的相对原子质量 g/mol
+Atomic_Mole_Quantity: 5 #化学式中原子的总摩尔量 如 1mol PbTe 总共包含2mol原子
+
+#必选设置
+Elastic_Constants_Condition: 0 #C12是否等于C44 1:表示等于，0： 表示不等于，2表示多晶无取向
+
+#可选设置
+#Adiabatic_Bulk_Modulus: 30 # 绝热块体模量  单位:GPa
+
+#Linear_Expansion_Coefficient: 1E-6 # 线膨胀系数 单位: /K
+
+Debye_Temperature: 150  #德拜温度 单位: K
+
+Poisson_Ratio: 0.25 #泊松比 单位: 无量纲
+
+Gruneisen_Constant: 1.5  #格林艾森常数，单位: 无量纲

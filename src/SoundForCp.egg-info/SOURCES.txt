@@ -1,0 +1,16 @@
+LICENSE
+MANIFEST.in
+README.md
+pyproject.toml
+setup.cfg
+setup.py
+bin/SoundforCp.exe
+example/input.yaml
+src/SoundForCp/SoundForCp.py
+src/SoundForCp/__init__.py
+src/SoundForCp.egg-info/PKG-INFO
+src/SoundForCp.egg-info/SOURCES.txt
+src/SoundForCp.egg-info/dependency_links.txt
+src/SoundForCp.egg-info/entry_points.txt
+src/SoundForCp.egg-info/requires.txt
+src/SoundForCp.egg-info/top_level.txt
