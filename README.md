@@ -1,6 +1,10 @@
 # SoundForCp
 
-`SoundForCp` is a  software package for calculating specific heat capacity based on sound velocity method.  A detailed description is available in xxxx.
+`SoundForCp` is a  software package for calculating specific heat capacity based on sound velocity method.  A detailed description is available in https://onlinelibrary.wiley.com/doi/10.1002/inf2.12372. 
+
+If you have used SoundForCp, please cite the following article.
+
+> 1. Pei, J., Li, H., Zhuang, H.-L., Dong, J., Cai, B., Hu, H., Li, J.-W., Jiang, Y., Su, B., Zhao, L.-D., & Li, J.-F. A sound velocity method for determining isobaric specific heat capacity. *InfoMat*, *n/a*(n/a), e12372. https://doi.org/10.1002/inf2.12372
 
 ## Requirement
 
@@ -32,8 +36,6 @@ py --version
 ```
 
 You should get some output like `Python 3.6.3`. If you do not have Python, please install the latest 3.x version from [python.org](https://www.python.org/) or refer to the [Installing Python](https://docs.python-guide.org/starting/installation/#installation) section of the Hitchhiker’s Guide to Python.
-
-
 
 We recommend to use [PyPI](https://pypi.org/) which allows to conveniently install SoundForCp and all its software dependencies with a single command. you’ll need to make sure you have [pip](https://packaging.python.org/en/latest/key_projects/#pip) available. You can check this by running:
 
@@ -138,15 +140,11 @@ after running successfully, there is an output file named as “out.csv” writt
 
 `Relative_Atomic_Mass` represents relative mole quantity for molecular formula.
 
-
-
 ### Required tags
 
 #### `Elastic_Constants_Condition`
 
 `Elastic_Constants_Condition` represent  elastic constants C12 equal C44 or not.  `Elastic_Constants_Condition`=2 represents  non-preferred orientation polycrystals. `Elastic_Constants_Condition`=1 represents  C12=C44. For cubic phase, C12 is equal to  C44  in preferred-oritention polycrystals or single crystal. For non cubic phase, C12 is unequal to  C44  in preferred-oritention polycrystals or single crystal. 
-
-
 
 ## Optional tags
 
@@ -170,15 +168,12 @@ after running successfully, there is an output file named as “out.csv” writt
 
 `Gruneisen_Constant`  represents the Gruneisen constant for the specific sample. It can also be calculated by sound velocity method. The unit is dimensionless. 
 
-
-
 ## Development
 
-PDFgui is an open-source software available on GitHub https://github.com/JunPei-China/SoundForCp. Feel free to fork the project and contribute. 
+SoundForCp is an open-source software available on GitHub https://github.com/JunPei-China/SoundForCp. Feel free to fork the project and contribute. 
 
 ## Contacts
 
-For more information on SoundForCp  please visit the project web-page or email Dr. Jun Pei at Jun_Pei@163.com.
-
+For more information on SoundForCp, please visit the project web-page or email Dr. Jun Pei at  [J.Pei@foxmail.com](mailto:J.Pei@foxmail.com).
 
 

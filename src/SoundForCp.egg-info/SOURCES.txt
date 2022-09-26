@@ -4,7 +4,9 @@ README.md
 pyproject.toml
 setup.cfg
 setup.py
-bin/SoundforCp.exe
+bin/SoundForCp-win-0.0.2.exe
+bin/SoundForCp-win-0.0.3.exe
+bin/SoundForCp-win-0.04.exe
 example/input.yaml
 src/SoundForCp/SoundForCp.py
 src/SoundForCp/__init__.py

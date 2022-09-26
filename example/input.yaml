@@ -20,8 +20,8 @@ Elastic_Constants_Condition: 0 #C12是否等于C44 1:表示等于，0： 表示�
 
 #Linear_Expansion_Coefficient: 1E-6 # 线膨胀系数 单位: /K
 
-Debye_Temperature: 150  #德拜温度 单位: K
+#Debye_Temperature: 150  #德拜温度 单位: K
 
-Poisson_Ratio: 0.25 #泊松比 单位: 无量纲
+#Poisson_Ratio: 0.25 #泊松比 单位: 无量纲
 
-Gruneisen_Constant: 1.5  #格林艾森常数，单位: 无量纲
+#Gruneisen_Constant: 1.5  #格林艾森常数，单位: 无量纲

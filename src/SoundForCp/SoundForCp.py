@@ -110,8 +110,6 @@ class HeatCapacityDebye(object):
             self.__debye_temperature = value
 
 
-
-
     #振动积分-防溢出 
     def vibration_integral(self):
         value,err=integrate.quad(lambda x: np.power(x,4) \
@@ -229,23 +227,49 @@ class HeatCapacityExpand(HeatCapacityDebye):
         return self.heat_capacity_mol_debye* \
             self.atomic_mole_quantity/self.relative_atomic_mass
     
+    #读写样品C12和C44的关系
+    @property
+    def elastic_constants_condition(self):
+        return self.__elastic_constants_condition
+    @elastic_constants_condition.setter
+    def elastic_constants_condition(self,value):
+        if not (isinstance(value,float) or isinstance(value,int)):
+            raise ValueError("density must be a float or int")
+        self.__elastic_constants_condition = value
+    
+    #读写样品C12和C44的关系
+    @property
+    def sound_velocity_rms(self):
+        value = np.power((np.power(self.sound_velocity_l,2) \
+                + 2*np.power(self.sound_velocity_t,2))/3,1/2)
+        return value
+        
+    
     # 读写绝热块体模量B_a
     @property
     def adiabatic_bulk_modulus(self):
         if self.__adiabatic_bulk_modulus_set == 0:
-            value = (np.power(self.sound_velocity_l,2)-4/3  \
-                *np.power(self.sound_velocity_t,2))*self.density/1E6
+            if self.elastic_constants_condition == 0:
+                value = (1+self.poisson_ratio)/(2-3*self.poisson_ratio)*self.density \
+                        *np.power(self.sound_velocity_rms,2) / 1E6
+            elif self.elastic_constants_condition == 1:
+                value = self.density *np.power(self.sound_velocity_rms,2) / 1E6
+            elif self.elastic_constants_condition == 2:
+                value = (np.power(self.sound_velocity_l,2)-4/3  \
+                    *np.power(self.sound_velocity_t,2))*self.density/1E6
+            else:
+                value = (np.power(self.sound_velocity_l,2)-4/3  \
+                    *np.power(self.sound_velocity_t,2))*self.density/1E6
             return value
         elif self.__adiabatic_bulk_modulus_set == 1:
             return self.__adiabatic_bulk_modulus
     @adiabatic_bulk_modulus.setter
     def adiabatic_bulk_modulus(self,value):
         if not (isinstance(value,float) or isinstance(value,int)):
-            raise ValueError("adiabatic bulk modulus must be a float or int") 
+            raise ValueError("adiabatic bulk modulus must be a float or int")
         else:
             self.__adiabatic_bulk_modulus_set = 1
             self.__adiabatic_bulk_modulus = value
-    
     
     #计算剪切模量
     @property
@@ -286,7 +310,7 @@ class HeatCapacityExpand(HeatCapacityDebye):
     @property
     def isothermal_bulk_modulus(self):
         value = self.adiabatic_bulk_modulus  \
-            /(1+self.linear_expansion_coefficient  \
+            /(1+3*self.linear_expansion_coefficient  \
             *self.gruneisen_constant*self.temperature)
         return value
     
@@ -339,6 +363,7 @@ def calculate():
     interval_temperature = float(parameter["Temperature"]["Interval_Temperature"])
     s.relative_atomic_mass = float(parameter["Relative_Atomic_Mass"])
     s.atomic_mole_quantity = float(parameter["Atomic_Mole_Quantity"])
+    s.elastic_constants_condition = float(parameter["Elastic_Constants_Condition"])
     
     if "Debye_Temperature" in parameter.keys():
         s.debye_temperature = float(parameter["Debye_Temperature"])
@@ -353,33 +378,35 @@ def calculate():
         s.linear_expansion_coefficient = float(
             parameter["Linear_Expansion_Coefficient"])
     
-    print("-"*36+"基本信息"+"-"*36)
-    print(" "*4+"本程序由13skeleton编写,如有任何问题，请直接联系邮箱。(J.Pei@foxmail.com)")
-    print("""
-      """)
-      
-    
-    print("-"*36+"输入参数"+"-"*36)
-    print("样品名称",s.sample_name)
-    print("纵波声速",s.sound_velocity_l)
-    print("横波声速",s.sound_velocity_t)
-    print("样品密度",s.density)
-    print("单胞中原子数目",s.number_atoms)
-    print("单胞体积",s.volume_cell)
-    print("起始温度",start_temperature)
-    print("终止温度",end_temperature)
-    print("间隔温度",interval_temperature)
-    print("相对原子质量",s.relative_atomic_mass)
-    print("总的原子摩尔量",s.atomic_mole_quantity)
+    print("+"*37+"  SoundForCp  "+"+"*37)
+    print("+"+" "*35+"version: 0.04"+" "*38+"+")
+    print("+"+" "*27+"Developed by Jing-Feng Li's Group"+" "*26+"+")
+    print("+"*88)  
+    print(" ")
+    print("-"*34+"  Input Parameters  "+"-"*34)
+    print("Sample Name",s.sample_name)
+    print("LongitudinalSound Velocity",s.sound_velocity_l)
+    print("Transverse Sound Velocity",s.sound_velocity_t)
+    print("Sample Density",s.density)
+    print("Number Atoms in Unit Cell",s.number_atoms)
+    print("Unit Cell Volume",s.volume_cell)
+    print("Start Temperature",start_temperature)
+    print("End Temperature",end_temperature)
+    print("Interval Temperature",interval_temperature)
+    print("Relative Atomic Mass",s.relative_atomic_mass)
+    print("Atomic Mole Quantity",s.atomic_mole_quantity)
+    if s.elastic_constants_condition == 0:
+        print("C12 ≠ C44")
+    elif s.elastic_constants_condition == 1:
+        print("C12 = C44")
+    else:
+        print("polycrystals without prefered orientation.")
+        
     if "Adiabatic_Bulk_Modulus" in parameter.keys():
-        print("绝热块体模量",s.adiabatic_bulk_modulus)
+        print("Adiabatic Bulk Modulus",s.adiabatic_bulk_modulus)
     if "Linear_Expansion_Coefficient" in parameter.keys():
-        print("线膨胀系数",s.linear_expansion_coefficient)
+        print("Linear Expansion Coefficient",s.linear_expansion_coefficient)
     print(" ")
-    print(" ")
-    print(" ")
-    
-
     
     results_temperature = []
     for i in np.arange(start_temperature,end_temperature,interval_temperature):
@@ -393,62 +420,76 @@ def calculate():
 
     with open("out.csv","w",newline="") as csvfile:
         myinput = csv.writer(csvfile)
-        myinput.writerow(["输入参数"])
-        myinput.writerow(["样品名称",s.sample_name])
-        myinput.writerow(["纵波声速",s.sound_velocity_l])
-        myinput.writerow(["横波声速",s.sound_velocity_t])
-        myinput.writerow(["样品密度",s.density])
-        myinput.writerow(["单胞中原子数目",s.number_atoms])
-        myinput.writerow(["单胞体积",s.volume_cell])
-        myinput.writerow(["起始温度",start_temperature])
-        myinput.writerow(["终止温度",end_temperature])
-        myinput.writerow(["间隔温度",interval_temperature])
-        myinput.writerow(["相对原子质量",s.relative_atomic_mass])
-        myinput.writerow(["总的原子摩尔量",s.atomic_mole_quantity])
+        myinput.writerow(["Input Parameters"])
+        myinput.writerow(["Sample Name",s.sample_name])
+        myinput.writerow(["Longitudinal Sound Velocity",s.sound_velocity_l])
+        myinput.writerow(["Transverse Sound Velocity",s.sound_velocity_t])
+        myinput.writerow(["Sample Density",s.density])
+        myinput.writerow(["Number Atoms in Unit Cell",s.number_atoms])
+        myinput.writerow(["Volume Unit Cell",s.volume_cell])
+        myinput.writerow(["Start Temperature",start_temperature])
+        myinput.writerow(["End Temperature",end_temperature])
+        myinput.writerow(["Interval Temperature",interval_temperature])
+        myinput.writerow(["Relative Atomic Mass",s.relative_atomic_mass])
+        myinput.writerow(["Atomic Mole Quantity",s.atomic_mole_quantity])
+        myinput.writerow(["Elastic Constants Condition",s.elastic_constants_condition])
         if "Adiabatic_Bulk_Modulus" in parameter.keys():
-            myinput.writerow(["绝热块体模量",s.adiabatic_bulk_modulus])
+            myinput.writerow(["Adiabatic Bulk Modulus",s.adiabatic_bulk_modulus])
         if "Linear_Expansion_Coefficient" in parameter.keys():
-            myinput.writerow(["线膨胀系数",s.linear_expansion_coefficient])
+            myinput.writerow(["Linear Expansion Coefficient",s.linear_expansion_coefficient])
         myinput.writerow([" "," "])
-        
-
-        
+                
     with open("out.csv","a",newline="") as csvfile:
         myoutput = csv.writer(csvfile)
-        myoutput.writerow(["#输出结果"])
-        myoutput.writerow(["平均声速",s.average_sound_velocity])
-        myoutput.writerow(["德拜温度",s.debye_temperature])
-        myoutput.writerow(["泊松比",s.poisson_ratio])
-        myoutput.writerow(["格林艾森常数",s.gruneisen_constant])
-        myoutput.writerow(["剪切模量",s.shear_modulus])
-        myoutput.writerow(["杨氏模量",s.Young_modulus])
+        myoutput.writerow(["#Output Results"])
+        myoutput.writerow(["Average Sound Velocity",s.average_sound_velocity])
+        myoutput.writerow(["Debye Temperature",s.debye_temperature])
+        myoutput.writerow(["Poisson Ratio",s.poisson_ratio])
+        myoutput.writerow(["Gruneisen Constant",s.gruneisen_constant])
+        myoutput.writerow(["Shear Modulus",s.shear_modulus])
+        myoutput.writerow(["Young's Modulus",s.Young_modulus])
         if "Adiabatic_Bulk_Modulus" not in parameter.keys():
-            myoutput.writerow(["绝热块体模量",s.adiabatic_bulk_modulus])
+            myoutput.writerow(["Adiabatic Bulk Modulus",s.adiabatic_bulk_modulus])
         myoutput.writerow([" "," "])
-        myoutput.writerow(["温度","线膨胀系数","等温块体模量","热容德拜项(mol)",
-            "热容德拜项(质量)","热容膨胀项(mol)","热容膨胀项(质量)",
-            "总热容(mol)","总热容(质量)"])
+        myoutput.writerow(["Temperature(K)","Linear_Expansion_Coefficient(/K)","Isothermal Bulk Modulus","Isobaric Heat Capacity of Debye Term(J/mol/K)",
+            "Isobaric Heat Capacity of Debye Term(J/g/K)","Isobaric Heat Capacity of Expansion Term(J/mol/K)","Isobaric Heat Capacity of Expansion Term(J/g/K)",
+            "Isobaric Heat Capacity(J/mol/K)","Isobaric Heat Capacity(J/g/K)"])
         myoutput.writerows(results_temperature)
     
-    print("-"*36+"#输出结果"+"-"*36)
-    print("平均声速",format(s.average_sound_velocity,".4f"))
-    print("德拜温度",format(s.debye_temperature,".4f"))
-    print("泊松比",format(s.poisson_ratio,".4f"))
-    print("格林艾森常数",format(s.gruneisen_constant,".4f"))
-    print("剪切模量",format(s.shear_modulus,".4f"))
-    print("杨氏模量(GPa)",format(s.Young_modulus,".4f"))
+    print("-"*35+"  Output Results  "+"-"*35)
+    print("Average Sound Velocity(m/s)",format(s.average_sound_velocity,".4f"))
+    print("Debye Temperature(K)",format(s.debye_temperature,".4f"))
+    print("Poisson Ratio",format(s.poisson_ratio,".4f"))
+    print("Gruneisen Constant",format(s.gruneisen_constant,".4f"))
+    print("Shear Modulus (GPa)",format(s.shear_modulus,".4f"))
+    print("Young Modulus (GPa)",format(s.Young_modulus,".4f"))
     if "Adiabatic_Bulk_Modulus" not in parameter.keys():
-        print("绝热块体模量(GPa)",format(s.adiabatic_bulk_modulus,".4f"))
+        print("Adiabatic Bulk Modulus (GPa)",format(s.adiabatic_bulk_modulus,".4f"))
     print("...")
     print("...")
     print("...")
             
-    print("计算完成，输出结果请查看out.csv文件")
+    print("Calculation was completed，Details can be seen in out.csv file.")
+    
+    print(" ")
+    print("+"*40+"  Tips  "+"+"*40)
+    print("+"+" "*4+"This program was developed by Jun Pei & Jing-Feng Li from Tsinghua University. If "+"+")
+    print("+"+"you have any question, please feel free to contact us."+" "*32+"+")
+    print("+"+"J.Pei@foxmail.com & Jingfeng@mail.tsinghua.edu.cn."+" "*36+"+")
+    print("+"+" "*86+"+")
+    print("+"+"Reference:"+" "*76+"+")
+    print("+"+" "*4+"1. Pei, J., Li, H., Zhuang, H.-L., Dong, J., Cai, B., Hu, H., Li, J.-W., Jiang, Y."+"+")
+    print("+"+" "*4+", Su, B.,Zhao, L.-D., & Li, J.-F. A sound velocity method for determining isobaric"+"+")
+    print("+"+" "*4+"specific heat capacity. InfoMat,2022, e12372. https://doi.org/10.1002/inf2.12372  "+"+")
+    print("+"+" "*86+"+")
+    print("+"+"If you have used SoundForCp, please cite the above article."+" "*27+"+")
+    print("+"*88)
+    
 
 def SoundForCp():
     calculate()
-    a = input("按任意键退出")    
+    a = input("press any keys to quit...")    
 
 if __name__ == "__main__":
     calculate()
-    a = input("按任意键退出")
+    a = input("press any keys to quit...")
