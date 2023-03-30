@@ -174,6 +174,6 @@ SoundForCp is an open-source software available on GitHub https://github.com/Jun
 
 ## Contacts
 
-For more information on SoundForCp, please visit the project web-page or email Dr. Jun Pei at  [J.Pei@foxmail.com](mailto:J.Pei@foxmail.com).
+For more information on SoundForCp, please visit the project web-page or email Dr. Jun Pei ([J.Pei@foxmail.com](mailto:J.Pei@foxmail.com)) and Dr. Hezhang Li(lihezhang1202@163.com) directly.
 
 

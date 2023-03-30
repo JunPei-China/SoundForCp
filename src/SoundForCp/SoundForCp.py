@@ -379,8 +379,9 @@ def calculate():
             parameter["Linear_Expansion_Coefficient"])
     
     print("+"*37+"  SoundForCp  "+"+"*37)
-    print("+"+" "*35+"version: 0.04"+" "*38+"+")
-    print("+"+" "*27+"Developed by Jing-Feng Li's Group"+" "*26+"+")
+    print("+"+" "*35+"version: 1.0"+" "*39+"+")
+    print("+"+" "*15+"Developed by Jing-Feng Li's Group & Bo-Ping Zhang's Group"+" "*14+"+")
+    print("+"+" "*29+"Last update time: 2023.03.20"+" "*29+"+")
     print("+"*88)  
     print(" ")
     print("-"*34+"  Input Parameters  "+"-"*34)
@@ -465,22 +466,24 @@ def calculate():
     print("Young Modulus (GPa)",format(s.Young_modulus,".4f"))
     if "Adiabatic_Bulk_Modulus" not in parameter.keys():
         print("Adiabatic Bulk Modulus (GPa)",format(s.adiabatic_bulk_modulus,".4f"))
+    	
     print("...")
     print("...")
     print("...")
-            
+    
     print("Calculation was completed，Details can be seen in out.csv file.")
     
     print(" ")
     print("+"*40+"  Tips  "+"+"*40)
-    print("+"+" "*4+"This program was developed by Jun Pei & Jing-Feng Li from Tsinghua University. If "+"+")
-    print("+"+"you have any question, please feel free to contact us."+" "*32+"+")
-    print("+"+"J.Pei@foxmail.com & Jingfeng@mail.tsinghua.edu.cn."+" "*36+"+")
+    print("+"+" "*4+"This program was developed by Dr. Jun Pei, Dr. Hezhang Li, and Prof. Jing-Feng Li."+"+")
+    print("+"+"If you have any question, please feel free to contact us.(J.Pei@foxmail.com, lihezhan"+" "+"+")
+    print("+"+"gshishui@163.com, and Jingfeng@mail.tsinghua.edu.cn.)"+" "*33+"+")
     print("+"+" "*86+"+")
     print("+"+"Reference:"+" "*76+"+")
     print("+"+" "*4+"1. Pei, J., Li, H., Zhuang, H.-L., Dong, J., Cai, B., Hu, H., Li, J.-W., Jiang, Y."+"+")
     print("+"+" "*4+", Su, B.,Zhao, L.-D., & Li, J.-F. A sound velocity method for determining isobaric"+"+")
-    print("+"+" "*4+"specific heat capacity. InfoMat,2022, e12372. https://doi.org/10.1002/inf2.12372  "+"+")
+    print("+"+" "*4+"specific heat capacity. InfoMat,2022,4(12):e12372. https://doi.org/10.1002/inf2.12"+"+")
+    print("+"+" "*4+"372."+" "*78+"+")
     print("+"+" "*86+"+")
     print("+"+"If you have used SoundForCp, please cite the above article."+" "*27+"+")
     print("+"*88)

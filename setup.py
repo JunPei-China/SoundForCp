@@ -7,9 +7,9 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="SoundForCp",
-    version="0.0.4",
-    author="JunPei-China",
-    author_email="Jun_Pei@163.com",
+    version="1.0",
+    author="JunPei-China, lihezhang1202",
+    author_email="Jun_Pei@163.com, lihezhang1202@163.com",
     description="A software package for calculating specific heat capacity based on sound velocity method.",
     long_description=long_description,
     long_description_content_type="text/markdown",

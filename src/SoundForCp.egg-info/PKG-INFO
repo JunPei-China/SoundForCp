@@ -1,10 +1,10 @@
 Metadata-Version: 2.1
 Name: SoundForCp
-Version: 0.0.4
+Version: 1.0
 Summary: A software package for calculating specific heat capacity based on sound velocity method.
 Home-page: https://github.com/JunPei-China/SoundForCp
-Author: JunPei-China
-Author-email: Jun_Pei@163.com
+Author: JunPei-China, lihezhang1202
+Author-email: Jun_Pei@163.com, lihezhang1202@163.com
 Project-URL: Bug Tracker, https://github.com/JunPei-China/SoundForCp/issues
 Classifier: Programming Language :: Python :: 3
 Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
@@ -189,6 +189,6 @@ SoundForCp is an open-source software available on GitHub https://github.com/Jun
 
 ## Contacts
 
-For more information on SoundForCp, please visit the project web-page or email Dr. Jun Pei at  [J.Pei@foxmail.com](mailto:J.Pei@foxmail.com).
+For more information on SoundForCp, please visit the project web-page or email Dr. Jun Pei ([J.Pei@foxmail.com](mailto:J.Pei@foxmail.com)) and Dr. Hezhang Li(lihezhang1202@163.com) directly.
 
 
